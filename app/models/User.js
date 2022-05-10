@@ -16,6 +16,15 @@ dateNaiss:{
 password:{
     type: Sequelize.STRING,
 },
+username:{
+    type: Sequelize.STRING,
+},
+ville:{
+    type: Sequelize.STRING,
+},
+pays:{
+    type: Sequelize.STRING,
+},
 createdAt:{
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW

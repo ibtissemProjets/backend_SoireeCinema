@@ -38,12 +38,17 @@ exports.login = (req, res) => {
 
 //REGISTER
 exports.register = (req, res) => {
+    console.log("checkapi")
     const today = new Date()
     const userData = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
+        ville:req.body.ville,
+        pays:req.body.pays,
+        username:req.body.username,
+        dateNaiss:req.body.dateNaiss,
         createdAt: today,
         RoleId: req.body.RoleId,
     }

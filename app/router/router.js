@@ -49,7 +49,7 @@ module.exports = function (app) {
 //catgFilm
     app.get('/admin/catfilmID/:id', categoryCtrls.findCatFilmsById);
 //registerClient
-    app.post('/users/register', auth.register);
+ 
 
 
    
