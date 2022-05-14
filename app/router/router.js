@@ -1,6 +1,6 @@
 const cors = require('cors');
 const express = require('express');
-
+const upload = require("../middleware/upload");
 module.exports = function (app) {
     const auth = require('../controller/authentification.js');
     const filmCtrls = require('../controller/filmCtrl');
@@ -8,7 +8,8 @@ module.exports = function (app) {
     const categoryCtrls = require('../controller/categoryCtrl.js');
     const nationalityCtrls = require('../controller/nationalityCtrl.js');
     const qualityCtrls = require('../controller/qualityCtrl.js');
-
+    const imageCtrls = require('../controller/imageCtrls.js');
+    const carousselCtrls = require('../controller/carousselCtrl');
     app.use(cors());
     app.options('*', cors());
  
@@ -46,11 +47,17 @@ module.exports = function (app) {
     app.delete('/admin/DeleteQualityById/:id', qualityCtrls.deleteQuality);
     app.put('/admin/UpdateQltById/:id', qualityCtrls.updateQlt);
 
-//catgFilm
+    //catgFilm
     app.get('/admin/catfilmID/:id', categoryCtrls.findCatFilmsById);
-//registerClient
- 
 
+    //gestion images
+    app.post('/admin/AddImage', imageCtrls.createImg);
+    app.get('/admin/getImage', imageCtrls.findImg);
+    app.delete('/admin/DeleteImgById/:id', imageCtrls.deleteImg);
+    app.put('/admin/UpdateImgById/:id', imageCtrls.updateImg);
+ //caroussel
+    app.post("/upload", upload.single("name"), carousselCtrls.uploadFiles);
+    app.get("/getPhotoCarousssel", carousselCtrls.getArticle);
 
    
  

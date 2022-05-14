@@ -7,7 +7,7 @@ const session = require('express-session');
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
+global.__basedir = __dirname;
 const cors = require('cors');
  app.use(cors());
 app.use(bodyParser.json())
