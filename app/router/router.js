@@ -1,6 +1,8 @@
 const cors = require('cors');
 const express = require('express');
 const upload = require("../middleware/upload");
+const uploadprofile = require("../middleware/uploadprofile");
+const uploadFileCouverture = require("../middleware/uploadCouv")
 module.exports = function (app) {
     const auth = require('../controller/authentification.js');
     const filmCtrls = require('../controller/filmCtrl');
@@ -10,6 +12,9 @@ module.exports = function (app) {
     const qualityCtrls = require('../controller/qualityCtrl.js');
     const imageCtrls = require('../controller/imageCtrls.js');
     const carousselCtrls = require('../controller/carousselCtrl');
+    const imgProfile = require('../controller/profileImgCtrl');
+    const imgCouve = require('../controller/couvertureImgCtrl.js');
+
     app.use(cors());
     app.options('*', cors());
  
@@ -55,10 +60,15 @@ module.exports = function (app) {
     app.get('/admin/getImage', imageCtrls.findImg);
     app.delete('/admin/DeleteImgById/:id', imageCtrls.deleteImg);
     app.put('/admin/UpdateImgById/:id', imageCtrls.updateImg);
- //caroussel
+    
+    //caroussel
     app.post("/upload", upload.single("name"), carousselCtrls.uploadFiles);
     app.get("/getPhotoCarousssel", carousselCtrls.getArticle);
 
-   
+   //ProfileImg
+   app.post("/uploadProfileImg", uploadprofile.single("name"), imgProfile.uploadFiles);
+    
+   //CouvertureImg
+    app.post("/uploadCouvertureImg", uploadFileCouverture.single("name"), imgCouve.uploadFiles);
  
 }

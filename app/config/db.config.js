@@ -19,6 +19,10 @@ db.sequelize = sequelize;
 db.sequelize = sequelize;
 db.caroussels = require('../models/Caroussel.js')(sequelize, Sequelize);
 
+
+db.imageprofiles = require('../models/ImgProfile')(sequelize, Sequelize);
+db.imagecouvs = require('../models/ImgCouv')(sequelize, Sequelize);
+
 db.users = require('../models/User.js')(sequelize, Sequelize);
 db.roles = require('../models/Role.js')(sequelize, Sequelize);
 db.films = require('../models/Film.js')(sequelize, Sequelize);
@@ -28,6 +32,26 @@ db.nationalites = require('../models/Nationality.js')(sequelize, Sequelize);
 db.categories = require('../models/Category.js')(sequelize, Sequelize);
 db.categriesfilms = require('../models/Categriesfilms.js')(sequelize, Sequelize);
 
+
+//FKey: FilmId dans table imageprofiles
+db.films.hasMany(db.imageprofiles, { as: "imgprofile" });
+db.imageprofiles.belongsTo(db.films, {
+  foreignKey: "FilmId",
+  as: "film",
+});
+//FKey: FilmId dans table imgCouverture
+db.films.hasMany(db.imagecouvs, { as: "imgcouv" });
+db.imagecouvs.belongsTo(db.films, {
+  foreignKey: "FilmId",
+  as: "film",
+});
+//FKey: userId dans table films
+db.users.hasMany(db.films, { as: "film" });
+db.films.belongsTo(db.users, {
+  foreignKey: "UserId",
+  as: "user",
+});
+
 //FKey: roleId dans table user
 db.roles.hasMany(db.users, { as: "users" });
 db.users.belongsTo(db.roles, {
@@ -35,12 +59,7 @@ db.users.belongsTo(db.roles, {
   as: "role",
 });
 
-//FKey: userId dans table films
-db.users.hasMany(db.films, { as: "film" });
-db.films.belongsTo(db.users, {
-  foreignKey: "UserId",
-  as: "user",
-});
+
 
 //FKey: filmId dans table categriesfilms
 db.films.hasMany(db.categriesfilms, { as: "film" });
